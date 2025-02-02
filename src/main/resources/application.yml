@@ -8,3 +8,11 @@ springdoc:
 spring:
   output.ansi.enabled: ALWAYS
   application.name: spring-autotestgenerator
+
+service:
+  auth:
+    url: http://mdpauth.msghubtmp.qrunoper.diasoft.ru/mdpauth/oauth/token
+    username: dqtech
+    password: 12345678
+
+
