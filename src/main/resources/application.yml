@@ -15,4 +15,13 @@ service:
     username: dqtech
     password: 12345678
 
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
 

@@ -81,6 +81,12 @@
             <version>20231013</version>
         </dependency>
 
+        <!--Для проб в кубере-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
