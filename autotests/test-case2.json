@@ -1,0 +1,262 @@
+{
+  "cases": [{
+    "caseName": "GetSchema",
+    "methodPath": "/scheme-xsd/{schemeXSDId}",
+    "methodType": "GET",
+    "requestBody": null,
+    "parametersPath": {
+      "schemeXSDId": 48
+    },
+    "parametersQuery": {
+      "fields": ""
+    },
+    "responseCode": 200,
+    "expectedObjects": {
+      "schemeXSDId": 48,
+      "format": "SWIFTMXCBR",
+      "correspondent": "",
+      "messageType": "camt.057.001.06",
+      "fileName": "",
+      "schemeXsd": "sdsdsd",
+      "inactive": false,
+      "orderNumber": 0,
+      "parentXpath": ""
+    },
+    "unexpectedObjects": null
+  }, {
+    "caseName": "GetAttribute",
+    "methodPath": "/heading-attribute/{headingAttributeId}",
+    "methodType": "GET",
+    "requestBody": null,
+    "parametersPath": {
+      "headingAttributeId": 86
+    },
+    "parametersQuery": {
+      "fields": ""
+    },
+    "responseCode": 200,
+    "expectedObjects": {
+      "headingAttributeId": 86,
+      "schemeXSDId": 34,
+      "name": "Двадцатизначный номер счета, по которому формируется выписка",
+      "xpath": "/Document/BkToCstmrStmt/Stmt/Acct/Id/Othr/Id"
+    },
+    "unexpectedObjects": null
+  }, {
+    "caseName": "UpdatedAttr",
+    "methodPath": "/heading-attribute/{headingAttributeId}",
+    "methodType": "PUT",
+    "requestBody": {
+      "headingAttributeId": 10,
+      "schemeXSDId": 4,
+      "name": "PaymentList_RegSettelmensDate111",
+      "xpath": "/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt"
+    },
+    "parametersPath": {
+      "headingAttributeId": 10
+    },
+    "parametersQuery": {},
+    "responseCode": 200,
+    "expectedObjects": {
+      "headingAttributeId": 10,
+      "schemeXSDId": 4,
+      "name": "PaymentList_RegSettelmensDate111",
+      "xpath": "/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt"
+    },
+    "unexpectedObjects": null
+  }, {
+    "caseName": null,
+    "methodPath": "/CreateXML",
+    "methodType": "POST",
+    "requestBody": {
+      "format": "ISO20022",
+      "headingAttributeList": [{
+        "attributeXPath": "",
+        "attributeName": "Страна получателя",
+        "attributeValue": "RU"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Референс отправителя сообщения",
+        "attributeValue": "FFFFF575566FTGG00012"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Тип сообщения",
+        "attributeValue": "pacs.008.001.08"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Формат сообщения",
+        "attributeValue": "IS022CBPRP"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Идентифицирующее имя отправителя сообщения",
+        "attributeValue": "cn=xxx, o=CLSBUS33, o=swift"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "SWIFT BIC отправителя сообщения",
+        "attributeValue": "CLSBUS33XXX"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Идентифицирующее имя получателя сообщения",
+        "attributeValue": "cn=xxx, o=OURBRUMM, o=swift"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "SWIFT BIC получателя сообщения",
+        "attributeValue": "OURBRUMMXXX"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "ID сообщения, который передается с этим заголовком (BAH)",
+        "attributeValue": "10182J2SD88G32HH1130111282301"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Зарезервир. значение для обработки в CBPRPlus SWIFT (BAH)",
+        "attributeValue": "swift.cbprplus.02"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "BIC банка отправителя сообщения (BAH)",
+        "attributeValue": "CLSBUS33XXX"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Тип сообщения, который передается с этим заголовком (BAH)",
+        "attributeValue": "pacs.008.001.08"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "BIC банка получателя сообщения (BAH)",
+        "attributeValue": "OURBRUMMXXX"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Дата и время составления заголовка сообщения (BAH)",
+        "attributeValue": "2025-03-28T10:43:13.340+03:00"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Дата и время создания сообщения",
+        "attributeValue": "2025-03-28T10:43:13.340+03:00"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Запрошенная дата исполнения",
+        "attributeValue": "2025-03-28"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Способ расчетов",
+        "attributeValue": "INGA"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Код (поле 22)",
+        "attributeValue": "8785gtth5676"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "UETR",
+        "attributeValue": "1f7c07ae-694f-4f75-943a-84d58b03f21f"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Сумма",
+        "attributeValue": "20.15"
+      }, {
+        "attributeXPath": "",
+        "attributeName": "Валюта",
+        "attributeValue": "USD"
+      }
+      ],
+      "messageType": "pacs.008.001.08",
+      "correspondent": "TESTSWBI",
+      "isValidate": "false",
+      "isAllowedSymbols": "false"
+    },
+    "parametersPath": {},
+    "parametersQuery": {},
+    "responseCode": 200,
+    "expectedObjects": {
+      "xml": "\n<Document xmlns=\"urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08\">\n  <FIToFICstmrCdtTrf>\n    <GrpHdr>\n      <CreDtTm>2025-03-28T10:43:13.340+03:00</CreDtTm>\n      <SttlmInf>\n        <SttlmMtd>INGA</SttlmMtd>\n      </SttlmInf>\n    </GrpHdr>\n    <CdtTrfTxInf>\n      <PmtId>\n        <EndToEndId>8785gtth5676</EndToEndId>\n        <UETR>1f7c07ae-694f-4f75-943a-84d58b03f21f</UETR>\n      </PmtId>\n      <IntrBkSttlmAmt Ccy=\"USD\">20.15</IntrBkSttlmAmt>\n    </CdtTrfTxInf>\n  </FIToFICstmrCdtTrf>\n</Document>\n",
+      "errorList": [],
+      "validateErrorList": [],
+      "replaceHeadingAttributeList": [{
+        "attributeName": "Страна получателя",
+        "attributeXPath": "",
+        "attributeValue": "RU"
+      }, {
+        "attributeName": "Референс отправителя сообщения",
+        "attributeXPath": "",
+        "attributeValue": "FFFFF575566FTGG00012"
+      }, {
+        "attributeName": "Тип сообщения",
+        "attributeXPath": "",
+        "attributeValue": "pacs.008.001.08"
+      }, {
+        "attributeName": "Формат сообщения",
+        "attributeXPath": "",
+        "attributeValue": "IS022CBPRP"
+      }, {
+        "attributeName": "Идентифицирующее имя отправителя сообщения",
+        "attributeXPath": "",
+        "attributeValue": "cn=xxx, o=CLSBUS33, o=swift"
+      }, {
+        "attributeName": "SWIFT BIC отправителя сообщения",
+        "attributeXPath": "",
+        "attributeValue": "CLSBUS33XXX"
+      }, {
+        "attributeName": "Идентифицирующее имя получателя сообщения",
+        "attributeXPath": "",
+        "attributeValue": "cn=xxx, o=OURBRUMM, o=swift"
+      }, {
+        "attributeName": "SWIFT BIC получателя сообщения",
+        "attributeXPath": "",
+        "attributeValue": "OURBRUMMXXX"
+      }, {
+        "attributeName": "ID сообщения, который передается с этим заголовком (BAH)",
+        "attributeXPath": "",
+        "attributeValue": "10182J2SD88G32HH1130111282301"
+      }, {
+        "attributeName": "Зарезервир. значение для обработки в CBPRPlus SWIFT (BAH)",
+        "attributeXPath": "",
+        "attributeValue": "swift.cbprplus.02"
+      }, {
+        "attributeName": "BIC банка отправителя сообщения (BAH)",
+        "attributeXPath": "",
+        "attributeValue": "CLSBUS33XXX"
+      }, {
+        "attributeName": "Тип сообщения, который передается с этим заголовком (BAH)",
+        "attributeXPath": "",
+        "attributeValue": "pacs.008.001.08"
+      }, {
+        "attributeName": "BIC банка получателя сообщения (BAH)",
+        "attributeXPath": "",
+        "attributeValue": "OURBRUMMXXX"
+      }, {
+        "attributeName": "Дата и время составления заголовка сообщения (BAH)",
+        "attributeXPath": "",
+        "attributeValue": "2025-03-28T10:43:13.340+03:00"
+      }, {
+        "attributeName": "Дата и время создания сообщения",
+        "attributeXPath": "/Document/FIToFICstmrCdtTrf/GrpHdr/CreDtTm",
+        "attributeValue": "2025-03-28T10:43:13.340+03:00"
+      }, {
+        "attributeName": "Запрошенная дата исполнения",
+        "attributeXPath": "/Document/FIToFICstmrCdtTrf/GrpHdr/IntrBkSttlmDt",
+        "attributeValue": "2025-03-28"
+      }, {
+        "attributeName": "Способ расчетов",
+        "attributeXPath": "/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/SttlmMtd",
+        "attributeValue": "INGA"
+      }, {
+        "attributeName": "Код (поле 22)",
+        "attributeXPath": "/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/EndToEndId",
+        "attributeValue": "8785gtth5676"
+      }, {
+        "attributeName": "UETR",
+        "attributeXPath": "/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/UETR",
+        "attributeValue": "1f7c07ae-694f-4f75-943a-84d58b03f21f"
+      }, {
+        "attributeName": "Сумма",
+        "attributeXPath": "/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt",
+        "attributeValue": "20.15"
+      }, {
+        "attributeName": "Валюта",
+        "attributeXPath": "/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/@Ccy",
+        "attributeValue": "USD"
+      }
+      ]
+    },
+    "unexpectedObjects": null
+  }
+  ],
+  "serverUrl": "http://192.168.88.224:8090/qisopmconvscheme"
+}
