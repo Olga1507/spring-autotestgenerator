@@ -11,7 +11,7 @@ spring:
 
 service:
   auth:
-    url: http://mdpauth.msghubtmp.qrunoper.diasoft.ru/mdpauth/oauth/token
+    url: http://192.168.88.224:8071/mdpauth/oauth/token
     username: dqtech
     password: 12345678
 
