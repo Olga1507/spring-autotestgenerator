@@ -13,7 +13,7 @@
     "responseCode": 200,
     "expectedObjects": {
       "schemeXSDId": 66,
-      "format": "IS022CBPRP",
+      "format": "IS022CBPRP1",
       "correspondent": "SJSCRUMMXXX",
       "messageType": "camt.053.001.08",
       "fileName": "SAA_XML_v2_0_6.xsd",
