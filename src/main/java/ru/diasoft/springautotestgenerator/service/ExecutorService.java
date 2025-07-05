@@ -222,6 +222,8 @@ public class ExecutorService {
         // create a client
         HttpClient client = HttpClient.newHttpClient();
 
+        log.info("Отправка запроса {} на адрес {}", type, URI.create(url));
+
         // create a request
         HttpRequest.Builder tmp = HttpRequest.newBuilder(URI.create(url))
                 .header("accept", "application/json")
@@ -264,6 +266,8 @@ public class ExecutorService {
 
         HttpClient client = HttpClient.newHttpClient();
 
+        log.info("Запрос токена. URI:{}", URI.create(authUrl));
+
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .uri(URI.create(authUrl))
@@ -274,7 +278,11 @@ public class ExecutorService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+        log.info("Ответ на запрос токена. code:{}, body:{}", response.statusCode(), response.body());
+
         String authToken = new JSONObject(response.body()).getString("access_token");
+
+        log.info("Auth token:'{}'", authToken);
 
         return authToken;
     }
