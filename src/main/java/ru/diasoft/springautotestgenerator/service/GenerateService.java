@@ -102,12 +102,15 @@ public class GenerateService {
             //заполняем параметры метода
             Map<String, Object> parametersPath = new HashMap<>();
             Map<String, Object> parametersQuery = new HashMap<>();
+            Map<String, Object> parametersHeader = new HashMap<>();
             if (methodDescription.getParameters() != null) {
                 methodDescription.getParameters().forEach(param -> {
                     if ("path".equals(param.getIn())){
                         parametersPath.put(param.getName(), ValueGenerator.generateValueByParameter(param, schemas));
                     } else if ("query".equals(param.getIn())){
                         parametersQuery.put(param.getName(), ValueGenerator.generateValueByParameter(param, schemas));
+                    } else if ("header".equals(param.getIn())){
+                        parametersHeader.put(param.getName(), ValueGenerator.generateValueByParameter(param, schemas));
                     } else {
                         throw new IllegalArgumentException(String.format(
                                 "В теге in параметра %s содержится некорректное значение: %s",
@@ -118,6 +121,7 @@ public class GenerateService {
             }
             testCase.setParametersPath(parametersPath);
             testCase.setParametersQuery(parametersQuery);
+            testCase.setParametersHeader(parametersHeader);
 
             //если RequestBody не пустое
             if (methodDescription.getRequestBody() != null) {

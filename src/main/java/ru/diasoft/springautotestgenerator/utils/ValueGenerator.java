@@ -139,8 +139,37 @@ public class ValueGenerator {
                 knownSchemas.remove(schema);
                 return List.of(o1, o2);
             }
+            // Обработка случая, когда элемент имеет изменяемый тип (oneOf в apidocs/choice в xml)
+            else if (schema.getOneOf() != null) {
+                int n = Randomizer.rndInt(schema.getOneOf().size());
+                Schema tmpSchema = (Schema) schema.getOneOf().get(n);
+                Object buferVal = generateValueBySchema(tmpSchema, schemas, knownSchemas);
+                knownSchemas.remove(tmpSchema);
+                return buferVal;
+            }
+            // Обработка случая, когда элемент allOf в apidocs
+            else if (schema.getAllOf() != null) {
+                if (schema.getAllOf().size() > 1) {
+                    log.warn("В схеме name='%s', title='%s' тег allOf содержит не один, а %s элементов."
+                            .formatted(schema.getName(), schema.getTitle(), schema.getAllOf().size()));
+                }
+                int n = Randomizer.rndInt(schema.getAllOf().size());
+                Schema tmpSchema = (Schema) schema.getAllOf().get(n);
+                Object buferVal = generateValueBySchema(tmpSchema, schemas, knownSchemas);
+                knownSchemas.remove(tmpSchema);
+                return buferVal;
+            }
             //1. Примитивный тип (properties и additionalProperties = null, type != array)
             else {
+                if ((schema.getEnum() == null || schema.getEnum().size() == 0)
+                        && schema.getFormat() == null
+                        && schema.getDescription() == null
+                        && schema.getName() == null
+                        && schema.getTitle() == null
+                        && schema.getType() == null) {
+                    int k = 0;
+                }
+
                 Object buferVal = generateValueBySimpleType(schema);
                 knownSchemas.remove(schema);
                 return buferVal;
@@ -160,9 +189,23 @@ public class ValueGenerator {
 
             //todo решить вопрос с перезаписью additionalProp1, если такие же названия есть в Properties
             if (schema.getAdditionalProperties() != null) {
-                result.put("additionalProp1", generateValueBySchema((Schema) schema.getAdditionalProperties(), schemas, knownSchemas));
-                result.put("additionalProp2", generateValueBySchema((Schema) schema.getAdditionalProperties(), schemas, knownSchemas));
-                result.put("additionalProp3", generateValueBySchema((Schema) schema.getAdditionalProperties(), schemas, knownSchemas));
+                Schema tmpSchema = (Schema) schema.getAdditionalProperties();
+
+                if ("object".equals(schema.getType())
+                        && (tmpSchema.getEnum() == null || tmpSchema.getEnum().size() == 0)
+                        && tmpSchema.getFormat() == null
+                        && tmpSchema.getDescription() == null
+                        && tmpSchema.getName() == null
+                        && tmpSchema.getTitle() == null
+                        && tmpSchema.getType() == null) {
+                    log.warn("AdditionalProperties у схемы name='%s', title='%s' не заполнены корректно. Сформировано заглушечное значение"
+                            .formatted(schema.getName(), schema.getTitle()));
+                    result.put("additionalProp1", "{TODO: ПРОВЕРИТЬ!}");
+                } else {
+                    result.put("additionalProp1", generateValueBySchema((Schema) schema.getAdditionalProperties(), schemas, knownSchemas));
+                    result.put("additionalProp2", generateValueBySchema((Schema) schema.getAdditionalProperties(), schemas, knownSchemas));
+                    result.put("additionalProp3", generateValueBySchema((Schema) schema.getAdditionalProperties(), schemas, knownSchemas));
+                }
             }
             knownSchemas.remove(schema);
             return result;
@@ -196,7 +239,27 @@ public class ValueGenerator {
     public static Object generateValueBySimpleType(Schema schema) {
         //описание в schemasExamples.json
         if (schema.getType() == null) {
-            throw new IllegalArgumentException("Тег type у схемы не заполнен. Невозможно сформировать пример значения.");
+            if (schema.getEnum() != null && schema.getEnum().size() > 0) {
+                return Randomizer.rndListValue(schema.getEnum());
+            } else {
+                if (schema.getFormat() != null) {
+                    log.warn("Тег type у схемы name='%s', title='%s' не заполнен. Вывод в результат - значение format"
+                            .formatted(schema.getName(), schema.getTitle()));
+                    return "TODO: ПРОВЕРИТЬ! " + schema.getFormat();
+                }
+                if (schema.getDescription() != null) {
+                    log.warn("Тег type у схемы name='%s', title='%s' не заполнен. Вывод в результат - значение description"
+                            .formatted(schema.getName(), schema.getTitle()));
+                    return "TODO: ПРОВЕРИТЬ! " + schema.getDescription();
+                }
+                if (schema.getTitle() != null) {
+                    log.warn("Тег type у схемы name='%s', title='%s' не заполнен. Вывод в результат - значение title"
+                            .formatted(schema.getName(), schema.getTitle()));
+                    return "TODO: ПРОВЕРИТЬ! " + schema.getTitle();
+                }
+            }
+            throw new IllegalArgumentException("Тег type у схемы name='%s', title='%s' не заполнен. Невозможно сформировать пример значения."
+                    .formatted(schema.getName(), schema.getTitle()));
         }
         if (schema.getExample() != null) {
             return schema.getExample();
@@ -220,6 +283,7 @@ public class ValueGenerator {
             case "object":
                 return "object";
             case "double":
+            case "number":
                 return Randomizer.rndDouble(10);
             case "float":
                 return Randomizer.rndFloat(10);
@@ -246,6 +310,7 @@ public class ValueGenerator {
         possibleContentTypes.add("text/plain;charset=UTF-8");
         possibleContentTypes.add("application/vnd.spring-boot.actuator.v3+json");
         possibleContentTypes.add("application/vnd.spring-boot.actuator.v2+json");
+        possibleContentTypes.add("multipart/form-data");
     }
 
     /**
@@ -274,7 +339,8 @@ public class ValueGenerator {
             }
 
             if (mediaType == null) {
-                throw new IllegalArgumentException(String.format("В мапе Content нет элементов/ни один из элементов в мапе Content не соответствует possibleContentTypes. Количество элементов в мапе Content: %s", content.size()));
+                throw new IllegalArgumentException(String.format(
+                        "В мапе Content нет элементов/ни один из элементов в мапе Content не соответствует possibleContentTypes. Содержимое Content: %s", content));
             }
         }
         return mediaType;
